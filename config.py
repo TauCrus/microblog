@@ -13,4 +13,7 @@ class Config(object):
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['TauCrus@163.com']
+    ADMINS = ['chenqq377@gmail.com']
+
+    # 每页展示的数据列表长度
+    POSTS_PER_PAGE = 20
