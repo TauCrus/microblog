@@ -20,3 +20,6 @@ class Config(object):
 
     # 每页展示的数据列表长度
     POSTS_PER_PAGE = 20
+
+    # Elasticsearch配置
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')

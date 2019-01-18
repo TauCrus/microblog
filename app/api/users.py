@@ -1,16 +1,19 @@
 from flask import jsonify, request, url_for
 from app import db
 from app.api import bp
+from app.api.auth import token_auth
 from app.api.errors import bad_request
 from app.models import User
 
 # 返回一个用户
 @bp.route('/users/<int:id>', methods=['GET'])
+@token_auth.login_required
 def get_user(id):
     return jsonify(User.query.get_or_404(id).to_dict())
 
 # 返回所有用户的集合
 @bp.route('/users', methods=['GET'])
+@token_auth.login_required
 def get_users():
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 10, type=int), 100)
@@ -19,6 +22,7 @@ def get_users():
 
 # 返回粉丝列表
 @bp.route('/users/<int:id>/followers', methods=['GET'])
+@token_auth.login_required
 def get_followers(id):
     user = User.query.get_or_404(id)
     page = request.args.get('page', 1, type=int)
@@ -29,6 +33,7 @@ def get_followers(id):
 
 # 返回关注用户列表
 @bp.route('/users/<int:id>/followed', methods=['GET'])
+@token_auth.login_required
 def get_followed(id):
     user = User.query.get_or_404(id)
     page = request.args.get('page', 1, type=int)
@@ -58,6 +63,7 @@ def create_user():
 
 # 修改用户
 @bp.route('/users/<int:id>', methods=['PUT'])
+@token_auth.login_required
 def update_user(id):
     user = User.query.get_or_404(id)
     data = request.get_json() or {}
